@@ -43,6 +43,70 @@
 <h1>Парсинг источников xml<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h1>
 <div class="section" id="id1">
 <h2>Введение<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Кто знает что такое xml, парсинг и зачем все это нужно - может спокойно перейти к следующему разделу.
+Для всех отстальных - коротко.</p>
+<p>Прежде всего - если Вас <strong>не</strong> интересует информация, поиск интересующих данных и извлечение из информации полезных знаний - эта статья Вас вряд ли заинтересует. Сначала советую ознакомиться с этой __ публикацией.</p>
+<p>xml - формат хранения данных в структурированном виде. Чтобы понять, что такое парсинг нужно помнить, что</p>
+<ol class="arabic simple">
+<li>в формате xml удобно <em>хранить</em> данные любой сложности и размера. И такой способ хранения данных очень распространен (см. __)</li>
+<li>извлекать и анализировать данные, сохраненные в формате xml не удобно</li>
+<li>Если Вы не нашли нужную информацию, сохраненную в xml, можно поискать ее на сайтах в Интернет. Знайте, что любая страница сайта - это источник хранения данных в формате xml (точнее его подвида - html)</li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h2>Инструменты и алгоритм парсинга<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Именно в таком порядке. Сначала был выбран Python в качестве инструмента разработки парсера, а затем &#8220;шишки&#8221;, &#8220;подводные камни&#8221; и прикладные задачи, которые должен выполнять парсер помогли определиться с алгоритмом.</p>
+</div>
+<div class="section" id="id3">
+<h2>Виды источников xml<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Наиболее распространенные (востребованные) источники xml можно разделить на три типа.</p>
+<ol class="arabic simple">
+<li>файлы с данными, сохраненными в формате xml</li>
+<li>страницы сайта, содержащие интересующие данные</li>
+<li>Новостные ленты, различные API сервисы, предоставляющие по запросу данные в формате xml</li>
+</ol>
+<p>Приведем несколько примеров источников каждого типа
+* файлы с данными xml</p>
+<blockquote>
+<div><ul class="simple">
+<li>наборы открытых данных России <a class="reference external" href="http://data.gov.ru/opendata">http://data.gov.ru/opendata</a></li>
+<li>открытый корпус русского языка <a class="reference external" href="http://opencorpora.org/?page=downloads">http://opencorpora.org/?page=downloads</a></li>
+<li>база данных ФИАС <a class="reference external" href="http://fias.nalog.ru/Updates.aspx">http://fias.nalog.ru/Updates.aspx</a></li>
+<li>справочники 1С ___</li>
+</ul>
+</div></blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt>сайты с полезными и интересными данными</dt>
+<dd><ul class="first last simple">
+<li>сайты различных объявлений (например, <a class="reference external" href="http://irr.ru/">http://irr.ru/</a>, <a class="reference external" href="https://www.avito.ru/">https://www.avito.ru/</a>)</li>
+<li>поиск людей в социальных сетях <a class="reference external" href="https://yandex.ru/people">https://yandex.ru/people</a></li>
+<li>рынки и биржевые котировки <a class="reference external" href="http://finance.rambler.ru/">http://finance.rambler.ru/</a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Новостные ленты и API сервисы</dt>
+<dd><ul class="first last simple">
+<li>Новостные информационные агентства (например, <a class="reference external" href="https://lenta.ru/rss">https://lenta.ru/rss</a>)</li>
+<li>геосервисы (например, <a class="reference external" href="http://nominatim.openstreetmap.org/">http://nominatim.openstreetmap.org/</a>)</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Парсинг источника каждого типа имеет свои особенности, которые могут снижать эффективность работы парсеров: файлы xml могут быть очень большого размера, страницы сайта могут иметь некорректную разметку...</p>
+<p>При написании парсера __ были максимально учтены.</p>
+<p>Как работать с парсером
+Парсер - это скрипт, написанный на Python.
+Для полноценной работы скрипта необходимо предварительно установить пакеты python ....</p>
+<div class="section" id="id4">
+<h3>Как парсить файлы xml<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h3>
+</div>
+<div class="section" id="id5">
+<h3>Как парсить страницы сайтов в Интернете<a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h3>
+</div>
 </div>
 </div>
 
@@ -56,6 +120,12 @@
   <ul>
 <li><a class="reference internal" href="#">Парсинг источников xml</a><ul>
 <li><a class="reference internal" href="#id1">Введение</a></li>
+<li><a class="reference internal" href="#id2">Инструменты и алгоритм парсинга</a></li>
+<li><a class="reference internal" href="#id3">Виды источников xml</a><ul>
+<li><a class="reference internal" href="#id4">Как парсить файлы xml</a></li>
+<li><a class="reference internal" href="#id5">Как парсить страницы сайтов в Интернете</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
