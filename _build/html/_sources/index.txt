@@ -12,7 +12,8 @@ Contents:
    :maxdepth: 1
 
    article/xml_parsing
-   article/create_documentation
+   article/usage_xmlPyParser
+   article/xml_source_list
 
 
 
