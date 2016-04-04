@@ -45,17 +45,46 @@
 <dl class="docutils">
 <dt><strong>Нужно знать</strong></dt>
 <dd><ol class="first last arabic simple">
-<li>Структура данных <strong>любого</strong> xml источника представляет собой дерево, которое можно отобразить, например, так __</li>
+<li>Любой источник данных xml имеет древовидную стру</li>
 <li><strong>Все</strong> страницы любого сайта, которые Вы видите в своем браузере являются xml источником данных, а точнее его подвида - html. А значит все что отображено на странице сайта - сохранено в древовидной структуре.</li>
-<li>Чтобы указать парсеру какие данные Вам нужно извлечь, необходимо _указать путь к этим данным, начиная от корня дерева</li>
+<li>Чтобы указать парсеру какие данные Вам нужно извлечь, необходимо задать путь к этим данным, начиная от корня дерева</li>
 </ol>
 </dd>
 </dl>
-<p><strong>Пример 1</strong></p>
-<p>Приведем простой пример. Нам необходимо узнать путь, по которому сохранены заголовки объявлений, отражающихся на страницах сайта Avito.ru</p>
-<p>Для этого открываем страницу сайта с объявлениями (регион не важен), берем первое попавшееся объявление и запоминаем что написано в его заголовке, например, ___</p>
-<p>Теперь просто запускаем xmlPyParser передав ему два параметра 1) адрес страницы сайта Avito.ru, на котором расположены объявления, 2) текст заголовка объявления</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getPath <span class="nv">url</span><span class="o">=</span>http://---- <span class="nv">text</span><span class="o">=</span><span class="s1">&#39;dddd&#39;</span>
+<p>xmlPyParser предоставляет два способа определения пути к нужным данным: графический и консольный.</p>
+<p>Графический способ наглядно отражает структуру всего дерева источника xml и позволяет быстро определить путь к любым данным источника</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Пример_1:</th><td class="field-body">Необходимо отобразить структуру данных новостной ленты сайта Lenta.ru. Для этого просто введем команду</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getTree <span class="nv">url</span><span class="o">=</span><span class="s1">&#39;https://lenta.ru/rss&#39;</span>
+</pre></div>
+</div>
+<p>В результате парсер сгенерирует графический файл (png) наглядно отражающий структуру xml источника</p>
+<img alt="../_images/lenta_tree.png" src="../_images/lenta_tree.png" />
+<p>Из рисунка легко понять, что в заданном источнике xml по пути
+<em>rss/channel/description</em>  сохранены данные ___,
+по пути <em>rss/channel/item/description</em> сохранены
+а перейдя по пути <em>rss/channel/item/pubDate</em> мы узнаем дату и время появления новости</p>
+<p>Графический способ анализа структуры источника xml не удобен для сильно разветвленных источников. К таковым прежде всего относятся страницы сайтов, сохраняющие данные в формате html. Например, вот так выглядит структура страницы сайта <a class="reference external" href="https://www.avito.ru">https://www.avito.ru</a>, содержащая объявления купли-продажи</p>
+<hr class="docutils" />
+<p>Разобраться из рисунка, по какому пути находятся нужные дам данные (например, заголовок объявления) практически невозможно.</p>
+<p>Поэтому, при определении пути к данным в сильно разветвленной структуре источника xml лучше воспользоваться консольным способом. Поясним его работу на примере</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Пример_2:</th><td class="field-body">Необходимо узнать путь, по которому сохранены заголовки объявлений, отражающихся на страницах сайта Avito.ru</td>
+</tr>
+</tbody>
+</table>
+<p>Для этого открываем страницу сайта с объявлениями (регион не важен), берем первое попавшееся объявление и запоминаем что написано в его заголовке, например, <em>&#8220;Багажник на крышу&#8221;</em></p>
+<p>Теперь запускаем xmlPyParser передав ему два параметра 1) адрес страницы сайта Avito.ru, на котором расположены объявления, 2) текст заголовка объявления</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getPath <span class="nv">url</span><span class="o">=</span><span class="s1">&#39;https://www.avito.ru/rostov-na-donu&#39;</span> <span class="nv">text</span><span class="o">=</span><span class="s1">&#39;Багажник на крышу&#39;</span>
 </pre></div>
 </div>
 <p>Программа вернет примерно такой результат</p>
@@ -74,13 +103,6 @@
 </ol>
 </dd>
 </dl>
-<p><strong>Пример 2</strong></p>
-<p>Необходимо отобразить структуру ленты новостей сайта Lenta.ru. Для этого просто введем команду</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getTree <span class="nv">url</span><span class="o">=</span>_____
-</pre></div>
-</div>
-<p>В результате парсер сгенерирует графический файл наглядно отражающий структуру xml источника</p>
-<img alt="../_images/lenta_tree.png" src="../_images/lenta_tree.png" />
 </div>
 
 
