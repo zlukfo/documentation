@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Документирование разработок &mdash; Документация mydoc 1</title>
+    <title>Шпаргалка python sphinx &mdash; Документация mydoc 1</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="../index.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="xmlPyParser_all_params.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -37,8 +38,63 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="id1">
-<h1>Документирование разработок<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+  <div class="section" id="python-sphinx">
+<h1>Шпаргалка python sphinx<a class="headerlink" href="#python-sphinx" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="section" id="restructuredtext">
+<h2>Стандартный синтаксис reStructuredText<a class="headerlink" href="#restructuredtext" title="Ссылка на этот заголовок">¶</a></h2>
+<p>1.
+<em>*курсив*</em>, <strong>**жирный**</strong>, <code class="docutils literal"><span class="pre">``код``</span></code></p>
+<ol class="arabic simple" start="2">
+<li></li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Чтобы</span> <span class="n">выделить</span> <span class="n">такой</span> <span class="n">многострочный</span> <span class="n">блок</span> <span class="n">кода</span> <span class="n">нужно</span>
+<span class="n">сначала</span> <span class="n">ввести</span> <span class="s2">&quot;::&quot;</span> <span class="o">-&gt;</span> <span class="n">пустая</span> <span class="n">строка</span> <span class="o">-&gt;</span> <span class="n">блок</span> <span class="n">кода</span> <span class="p">(</span><span class="n">начиная</span> <span class="n">с</span> <span class="n">табуляции</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">пустая</span> <span class="n">строка</span>
+</pre></div>
+</div>
+<p>3.
+<a class="reference external" href="http://google.com/">Link text</a>  - Эта ссылка пишется так &#8220;`Link text &lt;<a class="reference external" href="http://google.com/">http://google.com/</a>&gt;`_ &#8220;</p>
+<blockquote>
+<div>Если новую строку начать с пробела - будет такое выделение</div></blockquote>
+</div>
+<div class="section" id="sphinx">
+<h2>Расширенный синтаксис sphinx<a class="headerlink" href="#sphinx" title="Ссылка на этот заголовок">¶</a></h2>
+<p>В качестве расширения синтаксиса reStructuredText sphinx имеет набор директив. Каждая директива пишется так</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8221;.. &#8221; directive type &#8221;::&#8221; directive</dt>
+<dd>block</dd>
+</dl>
+</div></blockquote>
+<p>Приведем примеры некоторых директив</p>
+<div class="admonition note">
+<p class="first admonition-title">Примечание</p>
+<p class="last">Директива &#8220;note&#8221;
+Вот так она работает</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Предупреждение</p>
+<p class="last">Заголовок блока
+такой блок формируется при помощи директивы &#8221;.. warning::&#8221;</p>
+</div>
+<div class="sidebar">
+<p class="first sidebar-title">Директива &#8221;.. sidebar::&#8221;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">subtitle:</th><td class="field-body">Не пойму как сделать его слева</td>
+</tr>
+</tbody>
+</table>
+<p class="last">нужно посмотреть настройки</p>
+</div>
+<p>Директива &#8221;.. code::&#8221; оформляет блок кода с подсветкой синтаксиса</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">my_function</span><span class="p">():</span>
+    <span class="s2">&quot;just a test&quot;</span>
+    <span class="nb">print</span> <span class="mi">8</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -46,10 +102,20 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Шпаргалка python sphinx</a><ul>
+<li><a class="reference internal" href="#restructuredtext">Стандартный синтаксис reStructuredText</a></li>
+<li><a class="reference internal" href="#sphinx">Расширенный синтаксис sphinx</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="xmlPyParser_all_params.html" title="предыдущая глава">&lt;no title&gt;</a></li>
   </ul></li>
 </ul>
 </div>
