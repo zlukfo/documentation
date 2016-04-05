@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Основы применения парсера xmlPyParser &mdash; Документация mydoc 1</title>
+    <title>xmlPyParser. Быстрый старт &mdash; Документация mydoc 1</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -40,21 +40,27 @@
           <div class="body" role="main">
             
   <div class="section" id="xmlpyparser">
-<h1>Основы применения парсера xmlPyParser<a class="headerlink" href="#xmlpyparser" title="Ссылка на этот заголовок">¶</a></h1>
+<h1>xmlPyParser. Быстрый старт<a class="headerlink" href="#xmlpyparser" title="Ссылка на этот заголовок">¶</a></h1>
+<p><strong>xmlPyParser</strong> - это программа написанная на языке программирования Python. xmlPyParser является именно <strong>инструментом</strong> парсинга, потому что:</p>
+<ul class="simple">
+<li>может быть запущен как конечное консольное приложение для анализа структуры xml источника и извлечения данных из него,</li>
+<li>может быть импортирован в другие скрипты Python в виде класса,</li>
+<li>может быть запущен на сервере в качестве Web-приложения.</li>
+</ul>
 <p>Мы постарались сделать использование парсера максимально простым и не требующим каких-либо глубоких и специальных знаний. Но некоторые вещи Вам все-таки знать необходимо.</p>
 <div class="section" id="xml">
 <h2>Анализ структуры источника xml<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h2>
 <dl class="docutils">
 <dt><strong>Нужно знать</strong></dt>
 <dd><ol class="first last arabic simple">
-<li>Любой источник данных xml имеет древовидную стру</li>
-<li><strong>Все</strong> страницы любого сайта, которые Вы видите в своем браузере являются xml источником данных, а точнее его подвида - html. А значит все что отображено на странице сайта - сохранено в древовидной структуре.</li>
-<li>Чтобы указать парсеру какие данные Вам нужно извлечь, необходимо задать путь к этим данным, начиная от корня дерева</li>
+<li>Любой источник данных xml имеет древовидную структуру</li>
+<li>Все страницы любого сайта, которые Вы видите в своем браузере являются xml источником данных, а точнее его подвида - html. А значит все что отображено на странице сайта - сохранено в древовидной структуре.</li>
+<li>Чтобы указать парсеру какие данные нужно извлечь, необходимо задать путь к этим данным, начиная от корня дерева</li>
 </ol>
 </dd>
 </dl>
-<p>xmlPyParser предоставляет два способа определения пути к нужным данным: графический и консольный.</p>
-<p>Графический способ наглядно отражает структуру всего дерева источника xml и позволяет быстро определить путь к любым данным источника</p>
+<p><strong>xmlPyParser</strong> предоставляет два способа определения пути к нужным данным: графический и консольный.</p>
+<p><em>Графический способ</em> наглядно отражает структуру всего дерева источника xml и позволяет быстро определить путь к любым данным источника</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -70,7 +76,7 @@
 <img alt="../_images/lenta_tree.png" src="../_images/lenta_tree.png" />
 <p>Из рисунка легко понять, что в заданном источнике xml по пути
 <em>rss/channel/description</em>  сохранены данные ___,
-по пути <em>rss/channel/item/description</em> сохранены
+по пути <em>rss/channel/item/description</em> сохранены ___
 а перейдя по пути <em>rss/channel/item/pubDate</em> мы узнаем дату и время появления новости</p>
 <p>Графический способ анализа структуры источника xml не удобен для сильно разветвленных источников. К таковым прежде всего относятся страницы сайтов, сохраняющие данные в формате html. Например, вот так выглядит структура страницы сайта <a class="reference external" href="https://www.avito.ru">https://www.avito.ru</a>, содержащая объявления купли-продажи</p>
 <hr class="docutils" />
@@ -105,7 +111,7 @@
 <dt><strong>Нужно знать</strong></dt>
 <dd><ol class="first last arabic simple">
 <li>по одному и тому же пути дерева может находиться несколько элементов данных, имеющих различное значение. Предыдущий пример наглядно это демонстрирует: извлекая значения источника по пути &#8220;html/body/div/div/div/div/div/div/div/div/a&#8221; мы получаем не один заголовок объявления (<em>&#8216;Багажник на крышу&#8217;</em> для которого мы определяли путь), а все заголовки объявлений расположенных на странице</li>
-<li>по своей природе структуры данных xml и html сильно различаются: совокупность элементов находящихся на одном уровне <em>xml</em> источника является набором данных одного типа. В то же время, совокупность элементов, находящихся на одном уровне <em>html</em> следует, как правило, рассматривать как набор данных, каждый из которых имеет свой уникальный тип. Поэтому при извлечении данных <strong>очень желательно</strong> указывать тип источника данных (xml или html). Проиллюстрируем сказанное на примере.</li>
+<li>по своей природе, структуры данных xml и html сильно различаются: совокупность элементов находящихся на одном уровне <em>xml</em> источника является набором данных <em>одного типа</em>. В то же время, совокупность элементов, находящихся на одном уровне <em>html</em> следует, как правило, рассматривать как набор данных, каждый из которых имеет свой <em>уникальный тип</em>. Поэтому при извлечении данных <strong>необходимо</strong> указывать тип источника данных (xml или html). Проиллюстрируем сказанное на примере.</li>
 </ol>
 </dd>
 </dl>
@@ -120,7 +126,7 @@
 <div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getData <span class="nv">url</span><span class="o">=</span><span class="s1">&#39;http://inosmi.ru/export/rss2/index.xml&#39;</span> <span class="nv">path</span><span class="o">=</span><span class="s2">&quot;rss/channel/item&quot;</span> <span class="nv">source_type</span><span class="o">=</span><span class="s2">&quot;xml&quot;</span>
 </pre></div>
 </div>
-<p>В результате парсер выдаст нам список новостей, каждая из которых содержит поля   с соответствующими значениями.</p>
+<p>В результате парсер выдаст нам список новостей, каждая из которых содержит поля с соответствующими значениями.</p>
 <ul class="simple">
 <li>title - заголовок новости</li>
 <li>link - ссылка на новость</li>
@@ -134,18 +140,17 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Пример_4:</th><td class="field-body"><p class="first">А теперь попробуем получить описание вакансий, размещенных на сайте <a class="reference external" href="http://hh.ru">http://hh.ru</a>.</p>
-<p class="last">При помощи функции парсера <em>getPath</em> определяем, что путь для описания вакансий - html/body/div/div/div/div/div/table/tr/td/div/div/table/tr/td/div/div/div/div/div.
-Пробуем извлечь данные, находящиеся по данному пути</p>
-</td>
+<tr class="field-odd field"><th class="field-name">Пример_4:</th><td class="field-body">А теперь попробуем получить описание вакансий, размещенных на сайте <a class="reference external" href="http://hh.ru">http://hh.ru</a>.</td>
 </tr>
 </tbody>
 </table>
+<p>При помощи функции парсера getPath определяем, что путь для описания вакансий - &#8220;html/body/div/div/div/div/div/table/tr/td/div/div/table/tr/td/div/div/div/div/div&#8221;.</p>
+<p>Пробуем извлечь данные, находящиеся по данному пути</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getData <span class="nv">url</span><span class="o">=</span><span class="s1">&#39;https://rostov.hh.ru/search/vacancy?text=&amp;area=76&#39;</span> <span class="nv">path</span><span class="o">=</span><span class="s2">&quot;html/body/div/div/div/div/div/table/tr/td/div/div/table/tr/td/div/div/div/div/div&quot;</span> <span class="nv">source_type</span><span class="o">=</span><span class="s2">&quot;html&quot;</span>
 </pre></div>
 </div>
 <p>В результате, помимо нужных нам данных парсер вернет много дополнительной информации, расположенной по тому же пути html страницы.</p>
-<p>Для того, чтобы исключить вывод парсером ненужной информации воспользуемся воспользуемся атрибутами</p>
+<p>Для того, чтобы исключить вывод парсером ненужной информации задействуем атрибуты</p>
 <dl class="docutils">
 <dt><strong>Нужно знать</strong></dt>
 <dd><ol class="first last arabic simple">
@@ -158,17 +163,17 @@
 </pre></div>
 </div>
 <p>В этой команде мы указываем парсеру, что кроме данных, хранящихся в элементах по заданному пути, необходимо вывести также <strong>все</strong> атрибуты каждого элемента, расположенного по данному пути.</p>
-<p>Из полученных результатов видно, что элемент содержащий описание вакансии (см. пример 4) имеет уникальный атрибут, которого нет у остальных элементов, находящихся по заданному пути
-имя атрибута &#8216;data-qa&#8217;, значение - &#8216;vacancy-serp__vacancy_snippet_responsibility&#8217;</p>
-<p>теперь нам осталось только уточнить путь, по которому парсеру необходимо извлекать данных из исходного источника, и снова запустить парсер</p>
-<hr class="docutils" />
+<p>Из полученных результатов видно, что элемент содержащий описание вакансии (см. условие примера 4) имеет уникальный атрибут, которого нет у остальных элементов, находящихся по заданному пути
+имя атрибута <em>&#8216;data-qa&#8217;</em>, значение - <em>&#8216;vacancy-serp__vacancy_snippet_responsibility&#8217;</em></p>
+<p>теперь нам осталось только уточнить путь, по которому парсеру необходимо извлекать данных из исходного источника</p>
+<blockquote>
+<div></div></blockquote>
+<p>А теперь проиллюстрируем, как извлечь необходимые данные, если их значения сохранены в атрибутах элементов источника xml.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Пример_5:</th><td class="field-body">Изменим <strong>Пример 4</strong> так, чтобы получить только необходимые нам данные.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Пример_6:</th><td class="field-body">А теперь проиллюстрируем, как извлечь необходимые данные, если их значения сохранены в атрибутах элементов источника xml. Для примера возьмем API сервиса геокодирования <a class="reference external" href="http://nominatim.openstreetmap.org">http://nominatim.openstreetmap.org</a>. Если запустить парсер с такими параметрами</td>
+<tr class="field-odd field"><th class="field-name">Пример_6:</th><td class="field-body">В качестве источника возъмем ответ API сервиса геокодирования <a class="reference external" href="http://nominatim.openstreetmap.org">http://nominatim.openstreetmap.org</a>. Если запустить парсер с такими параметрами</td>
 </tr>
 </tbody>
 </table>
@@ -179,7 +184,18 @@
 <div class="highlight-bash"><div class="highlight"><pre><span></span>xmlPyParser -getData <span class="nv">url</span><span class="o">=</span><span class="s1">&#39;http://nominatim.openstreetmap.org/search?q=Ростов&amp;format=xml&#39;</span> <span class="nv">path</span><span class="o">=</span><span class="s2">&quot;searchresults/place&quot;</span> <span class="nv">source_type</span><span class="o">=</span><span class="s2">&quot;xml&quot;</span> <span class="nv">attib</span><span class="o">=</span><span class="s1">&#39;display_name, lon, lat&#39;</span>
 </pre></div>
 </div>
-<p>то парсер извлечет из атрибутов наименование найденной местности, ее широту и долготу</p>
+<p>то парсер извлечет из атрибутов 1) наименование найденной местности, 2) ее широту и долготу</p>
+</div>
+<div class="section" id="id2">
+<h2>Резюме<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Итак, для извлечения данных с помощью xmlPyParser Вам необходимо выполнить несколько простых шагов:</p>
+<ol class="arabic simple">
+<li>Определяем адрес источника xml (путь к файлу на диске и адрес ресурса в Интернет) и тип источника (xml или html). Некоторые источники данных указаны <a class="reference external" href="xml_source_list.html">здесь</a></li>
+<li>При помощи xmlPyParser узнаем пути доступа к нужным нам данным</li>
+<li>Запускаем парсер, указав ему путь к источнику xml (html) данных и пути к элементам источника, содержащем необходимые данные</li>
+</ol>
+<p>Протестировать базовый функционал программы xmlPyParser можно на сервере ___</p>
+<p>Ознакомиться со всеми возможностями парсера xmlPyParser можно здесь ___</p>
 </div>
 </div>
 
@@ -191,9 +207,10 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Оглавление</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Основы применения парсера xmlPyParser</a><ul>
+<li><a class="reference internal" href="#">xmlPyParser. Быстрый старт</a><ul>
 <li><a class="reference internal" href="#xml">Анализ структуры источника xml</a></li>
 <li><a class="reference internal" href="#id1">Извлечение данных</a></li>
+<li><a class="reference internal" href="#id2">Резюме</a></li>
 </ul>
 </li>
 </ul>
