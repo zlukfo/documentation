@@ -13,7 +13,8 @@
 
    article/xml_parsing
    article/usage_xmlPyParser
-   article/xmlPyParser_all_params   
+   article/xmlPyParser_all_params 
+   article/hook_parsing  
    article/xmlPyParser_projects   
    article/xml_source_list
  
