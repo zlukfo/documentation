@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sources>
+    <source>
+        <description access='open', type='xml-url'>Новостная лента сайта Lenta.ru</description>
+        <address>http://lenta.ru/l/r/EX/import.rss</address>
+        <params_query query_type=''></params_query>
+        <struct></struct>
+        <path_list>
+            <path>
+                <adress>/rss/channel/item/title</adress>
+                <description>Заголовок новости<description>
+            </path>
+            <path>
+                <adress>/rss/channel/item/pubDate</adress>
+                <description>Дата создания новости<description>
+            </path>
+
+        </path_list>
+    </source>
+</sources>  
