@@ -25,7 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="../index.html" />
-    <link rel="prev" title="Источники открытых данных xml" href="xml_source_list.html" />
+    <link rel="next" title="Проекты на основе парсера xmlPyParser" href="xmlPyParser_projects.html" />
+    <link rel="prev" title="xmlPyParser. Быстрый старт" href="usage_xmlPyParser.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -128,6 +129,28 @@
 </table>
 <p>Для визуального отражения структуры источника в xmlPyParser существует еще один полезный метод <strong>toD3js()</strong>. Он преобразует структуру источника в структуру данных нотации treejson. Эта нотация используется популяроной javascript библиотекой D3js для отображения иерархических структур в браузере. Метод вызывается без параметров и возвращает словарь структуры источника в формате treejson</p>
 </div>
+<div class="section" id="id2">
+<h2>Извлечение данных из источника<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для извлечения применяется метод <strong>getData()</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">Path_List</span><span class="p">,</span> <span class="n">get_attrib</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">type_response</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>где:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Path_List:</th><td class="field-body">список путей к данным источника. Как правило, необходимые данные находятся в разных элементах источника xml, соответственно доступ к ним осуществляется по разным путям. Метод позволяет одновременно извлекать данные по нескольким путям, для этого их необходимо перечислить.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">get_attrib:</th><td class="field-body">логическая переменная, которая указывает на необходимость извлечения (True) данных из атрибутов элементов, находящихся по указанным путям</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">head:</th><td class="field-body">параметр полезен при работе с файлами-источниками xml большого размера. Чтобы понимать, что пути к данным указаны правильно и извлекаются именно нужные нам данные, данному параметру нужно присвоить ненулевое значение. Тогда, после извлечения <strong>head</strong> элементов данных парсер прервет работу</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type_response:</th><td class="field-body">Определяет способ трансформации данные перед их возвращением методом. По умолчанию, парсер при нахождении очередной порции данных в источнике xml тут же возвращает их в виде пары путь к элементу - значение элемента. Данные параметр, через присвоения ему значения &#8216;json&#8217; позволяет перед возвращением очередной порции найденных данных предварительно преобразовать их по следующему сценарию: найденные данные будут накапливаться во внутреннем буфере до тех пор, пока пути к ним не начнут повторятся. Как только это произойдет - данные будут возвращены одной порцией и парсер будет продолжать работу снова накапливая данные до их повторения. В данном случае, каждая порция возвращаемых данных эквивалентна строке в таблице с несколькими полями</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -141,6 +164,7 @@
 <li><a class="reference internal" href="#">Возможности парсера xmlPyParser</a><ul>
 <li><a class="reference internal" href="#id1">Создание объекта парсинга</a></li>
 <li><a class="reference internal" href="#xml">Анализ структуры xml источника</a></li>
+<li><a class="reference internal" href="#id2">Извлечение данных из источника</a></li>
 </ul>
 </li>
 </ul>
@@ -148,7 +172,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="xml_source_list.html" title="предыдущая глава">Источники открытых данных xml</a></li>
+      <li>Previous: <a href="usage_xmlPyParser.html" title="предыдущая глава">xmlPyParser. Быстрый старт</a></li>
+      <li>Next: <a href="xmlPyParser_projects.html" title="следующая глава">Проекты на основе парсера xmlPyParser</a></li>
   </ul></li>
 </ul>
 </div>
