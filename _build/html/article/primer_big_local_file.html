@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Парсинг базы вакансий &mdash; Документация mydoc 1</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Документация mydoc 1" href="../index.html" />
+    <link rel="prev" title="Источники открытых данных xml" href="xml_source_list.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>Парсинг базы вакансий<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>В данном разделе по шагам рассмотрен практический пример парсинга большого xml файла.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Задача:</th><td class="field-body">Необходимо закачать в таблицу БД Postgresql Общероссийскую базу вакансий, сохраненную в формате xml и доступную по адресу</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference external" href="http://data.gov.ru/opendata/7710538364-vacansii">http://data.gov.ru/opendata/7710538364-vacansii</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Исходные данные:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">В распакованнном виде файл xml занимает 842,3 Мб.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Полученные результаты</strong></p>
+<ul class="simple">
+<li>Количество полей таблицы - 19</li>
+<li>Количество записей - 320 479</li>
+<li>Общее время парсинга и закачки данных в таблицу БД Postgresql - 29 мин.</li>
+</ul>
+<div class="section" id="id2">
+<h2>Алгоритм<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>1. Определяет структуру данных источника xml
+В большинстве своем архивные файлы xml имеют не сильно разветвленную структуру и ассоциативные имена тегов. Поэтому анализировать структуру данных в файлах рекомендуется графическим способом.</p>
+<div class="section" id="id3">
+<h3>Поскольку наш файл имеет внушительный размер, очевидно, он собержит много записей одинаковой структуры. Поэтому анализировоть файл целиком для построения структуры данных не имеет смысла. Выполним построение структуры данных на примере первых 1000 элементов<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Получили вот такую структуру.</p>
+<p>Чтобы Убедиться, что полученная нами структура является полной, повторим построение дерева, увеличив количество тегов до 10000
+Как видим, структура не изменилась. Зничит показанное на рисунке дерево полностью отражает структуру данных xml источника.</p>
+<p>2. Указываем пути к данным
+Теги элементов xml файла имеют как правило информативные имена, поэтому из рисунка легко понять какие данные хранит каждый элемент. Кроме того, по рисунку легко постоить пути для каждого нужного элемента.</p>
+<p>мы в примере берем все элементы</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Парсинг базы вакансий</a><ul>
+<li><a class="reference internal" href="#id2">Алгоритм</a><ul>
+<li><a class="reference internal" href="#id3">Поскольку наш файл имеет внушительный размер, очевидно, он собержит много записей одинаковой структуры. Поэтому анализировоть файл целиком для построения структуры данных не имеет смысла. Выполним построение структуры данных на примере первых 1000 элементов</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="xml_source_list.html" title="предыдущая глава">Источники открытых данных xml</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Эта страница</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/article/primer_big_local_file.txt"
+            rel="nofollow">Исходный текст</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Быстрый поиск</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Искать" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, zlukfo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="../_sources/article/primer_big_local_file.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
