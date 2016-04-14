@@ -73,7 +73,10 @@
 <div class="section" id="xml">
 <h2>Анализ структуры xml источника<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h2>
 <p>Как было сказано ранее __, анализ структуры необходим для определения путей, по которым в xml источнике сохранены нужные нам данные. xmlPyParser предоставляет два способа определения путей - консольный и визуальный. Иногда, для более точного определения пути рекомендуется использовать их комбинацию.</p>
-<p>Чтобы определить путь к данным одного типа, используется метод <cite>restorePathByData</cite>:</p>
+<p>Чтобы определить путь к данным одного типа, используется 2 метода метод <cite>restorePathByData</cite>:</p>
+<ol class="arabic simple">
+<li></li>
+</ol>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">restorePathByData</span><span class="p">(</span><span class="n">data_string</span><span class="o">=</span><span class="n">Text</span><span class="p">,</span> <span class="n">in_attrib</span><span class="o">=</span><span class="n">Value</span><span class="p">):</span>
 </pre></div>
 </div>
@@ -88,7 +91,26 @@
 </tr>
 </tbody>
 </table>
-<p>Метод возвращает строку-путь в источнике данных, по которому найдена заданная строка</p>
+<ol class="arabic simple" start="2">
+<li></li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">restorePathByAttrib</span><span class="p">(</span><span class="n">source_path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">tag_name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">attrib</span><span class="o">=</span><span class="p">{}):</span>
+</pre></div>
+</div>
+<p>где:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">source_path:</th><td class="field-body">путь к источнику данных. Если не задан - берется путь при создании экземпляра</td>
+</tr>
+<tr class="field-even field"><th class="field-name">tag_name:</th><td class="field-body">имя тега в котором будем искать нужные атрибуты.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">attrib:</th><td class="field-body">словарь атрибутов, однозначно определяющий тег, путо до которого нужно найти.</td>
+</tr>
+</tbody>
+</table>
+<p>Оба Метода возвращает строку-путь в источнике данных, по которому найдена заданная строка</p>
 <p>Чтобы оценить структуру источника данных целиком, лучше использовать графический способ. Делается это следующим образом - сначала вызывается метод <strong>getTree</strong>, который генерирует дерево источника данных, затем это дерево сохраняется в файл одного из доступных графических форматов png или svg</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">getTree</span><span class="p">()</span>
 <span class="n">x</span><span class="o">.</span><span class="n">saveTree2png</span><span class="p">()</span>    <span class="c1"># для сохранения в файл png</span>

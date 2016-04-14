@@ -40,7 +40,49 @@
             
   <div class="section" id="id1">
 <h1>Парсинг удаленного источника (сайта)<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
-<p>аа</p>
+<p>Здесь мы рассмотрим пример парсинга сайта в интренет. Одним из наиболее популярных объектов парсинга являются сайты типа &#8220;интернет магазин&#8221;. Целью парсинга таких сайтов - извлечение данных о товарах - наименование, описание, цена, изображение. Адреса некоторых популярных интернет-магазинов можно узнать здесь ___</p>
+<p>Однако, поскольку в предыдущем примере мы извлекали данные из общероссийской базы вакансий, продолжим данную тематику и рассмотрим пример извлечения данных из сайта популярного рекрутинкового агенства HeadHunter ___</p>
+<p>Перед разбором примера следует заметить, что на рассматриваемом сайте информацию о вакансиях можно извлекать минимум тремя способами</p>
+<ol class="arabic simple">
+<li>используя API сайта</li>
+<li>используя rss сайта</li>
+<li>непосредственно со страниц сайта</li>
+</ol>
+<p>Однако, не все сайты предоставляют такое разноообразие способов для извлечения данных. Поэтому, в данном примере мы рассмотрим наиболее универсальный (хотя и не самый удобный) способ под номером 3 - извлечение данных непосредственно со страниц сайта</p>
+<div class="section" id="id2">
+<h2>Этап 1. Сбор ссылок на страницы сайта<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Первая особенность интернет сайтов как источника xml данных заключается в том, что данные хранятся по адресам (страниц) небольшими порциями. И таких адресов у сайта очень много. А кроме того, сайт включает адреса к другим данным, нас не интересующим. В нашем примере это адреса на описание компаниц, разместивших вакансии, адреса на страницы ___ и т.д. Нас интересуют только адреса с описанием вакансий.</p>
+<p>Поэтому, задача данного этапа - собрать все адреса сайта и оставить только те, по которым хранятся интересующие нас данные и.</p>
+<p>Решается эта задача с помощью следующего кода</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">url</span><span class="o">=</span><span class="s1">&#39;http://www.hh.ru&#39;</span>
+<span class="n">x</span><span class="o">=</span><span class="n">xmlParser</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">header</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">x</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">getAllLinks</span><span class="p">(</span><span class="n">link_file</span><span class="o">=</span><span class="s1">&#39;hh.lst&#39;</span><span class="p">,</span> <span class="n">maxdeep</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Код сканирует сайт и сохраняет все адреса в файл hh.lst</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">maxdeep:</th><td class="field-body">важный параметр метода - определяет глубину поиска ссылок. Т.е. сначала из первой (основной) страницы сайта извлекаются все ссылки на другие страницы. Затем метод переходит по каждой этой ссылке и уже из этой страницы извлекает все ссылкию Затем переходит по ним и опять извлекает все ссылки. Т.е. проходит вглубь сайта до уровня <strong>maxdeep</strong>. Значение -1 означает что ссылки будут извлекаться со всех доступных страниц сайта.</td>
+</tr>
+</tbody>
+</table>
+<p>Задача данного метода - собрать достаточное количество ссылок, чтобы понять структуру сайта. Поэтому иногда не обязательно собирать все ссылки, а ограничиться глубиной 5-10</p>
+</div>
+<div class="section" id="id3">
+<h2>Этап 2. Анализ ссылок<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Теперь необходимо вручную провести небольшой анализ ссылок. Дело в том, что нужные нам одни и те же данные могут быть представлены на сайте в разных формах и по разным ссылкам (путям). Для нашего примера это выглядит так.
+Мы собираем данные о вакансиях, размещенных на сайте. Вакансии представлены в следующих форматах</p>
+<ol class="arabic simple">
+<li>Самая подробная информация информация о вакансии хранится на страницах сайта примерно такого формата <a class="reference external" href="https://hh.ru/vacancy/16718241">https://hh.ru/vacancy/16718241</a>. По таким ссылкам на каждой странице хранятся данные только по одной вакансии</li>
+<li>Список вакансий хранится по ссылкам такого типа <a class="reference external" href="https://hh.ru/search/vacancy?page=3">https://hh.ru/search/vacancy?page=3</a>. Здесь на каждой странице хранится сокращенная информация по 20 вакансиям</li>
+<li>Отфильтронаннык списки вакансий хранятся по тому же адресу что и в 2 <a class="reference external" href="https://hh.ru/search/vacancy?page=3">https://hh.ru/search/vacancy?page=3</a>, но с добавлением к адресу дополнительных фильтров, например <a class="reference external" href="https://hh.ru/search/vacancy?page=3&amp;area=1">https://hh.ru/search/vacancy?page=3&amp;area=1</a> - вакансии по г. Москва</li>
+<li>Список вакансий по профессиям хранятся по адресу <a class="reference external" href="https://hh.ru/catalog/Avtomobilnyj-biznes/Nachalnii-uroven/page-2">https://hh.ru/catalog/Avtomobilnyj-biznes/Nachalnii-uroven/page-2</a></li>
+<li>Список краткого описания вакансий по кампаниям хранится по адресу <a class="reference external" href="https://hh.ru/employer/5406">https://hh.ru/employer/5406</a></li>
+</ol>
+</div>
 </div>
 
 
@@ -48,7 +90,16 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Парсинг удаленного источника (сайта)</a><ul>
+<li><a class="reference internal" href="#id2">Этап 1. Сбор ссылок на страницы сайта</a></li>
+<li><a class="reference internal" href="#id3">Этап 2. Анализ ссылок</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
