@@ -25,6 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="../index.html" />
+    <link rel="next" title="Парсинг удаленного источника (сайта)" href="primer_remote_source.html" />
     <link rel="prev" title="Источники открытых данных xml" href="xml_source_list.html" />
    
   
@@ -40,22 +41,15 @@
             
   <div class="section" id="id1">
 <h1>Парсинг базы вакансий<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
-<p>В данном разделе по шагам рассмотрен практический пример парсинга большого xml файла.</p>
+<p>В данном разделе по шагам рассмотрен практический пример парсинга <strong>большого xml файла</strong>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Задача:</th><td class="field-body">Необходимо закачать в таблицу БД Postgresql Общероссийскую базу вакансий, сохраненную в формате xml и доступную по адресу</td>
+<tr class="field-odd field"><th class="field-name">Задача:</th><td class="field-body">Необходимо закачать в таблицу БД Postgresql Общероссийскую базу вакансий, сохраненную в формате xml и доступную по адресу <a class="reference external" href="http://data.gov.ru/opendata/7710538364-vacansii">http://data.gov.ru/opendata/7710538364-vacansii</a></td>
 </tr>
-</tbody>
-</table>
-<p><a class="reference external" href="http://data.gov.ru/opendata/7710538364-vacansii">http://data.gov.ru/opendata/7710538364-vacansii</a></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">Исходные данные:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">В распакованнном виде файл xml занимает 842,3 Мб.</td>
+<tr class="field-even field"><th class="field-name" colspan="2">Исходные данные:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">В распакованнном виде файл xml занимает 842,3 Мб.</td>
 </tr>
 </tbody>
 </table>
@@ -67,17 +61,73 @@
 </ul>
 <div class="section" id="id2">
 <h2>Алгоритм<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
-<p>1. Определяет структуру данных источника xml
-В большинстве своем архивные файлы xml имеют не сильно разветвленную структуру и ассоциативные имена тегов. Поэтому анализировать структуру данных в файлах рекомендуется графическим способом.</p>
-<div class="section" id="id3">
-<h3>Поскольку наш файл имеет внушительный размер, очевидно, он собержит много записей одинаковой структуры. Поэтому анализировоть файл целиком для построения структуры данных не имеет смысла. Выполним построение структуры данных на примере первых 1000 элементов<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
-<p>Получили вот такую структуру.</p>
-<p>Чтобы Убедиться, что полученная нами структура является полной, повторим построение дерева, увеличив количество тегов до 10000
-Как видим, структура не изменилась. Зничит показанное на рисунке дерево полностью отражает структуру данных xml источника.</p>
-<p>2. Указываем пути к данным
-Теги элементов xml файла имеют как правило информативные имена, поэтому из рисунка легко понять какие данные хранит каждый элемент. Кроме того, по рисунку легко постоить пути для каждого нужного элемента.</p>
-<p>мы в примере берем все элементы</p>
+<ol class="arabic simple">
+<li>Определяет структуру данных источника xml.</li>
+</ol>
+<p>В большинстве своем архивные файлы xml имеют не сильно разветвленную структуру и ассоциативные имена тегов. Поэтому анализировать структуру данных в файлах рекомендуется графическим способом.</p>
+<p>Поскольку наш файл имеет внушительный размер, очевидно, он содержит много записей одинаковой структуры. Поэтому анализировать файл целиком для построения структуры данных не имеет смысла. Выполним построение структуры данных на примере первых 1000 элементов</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">xmlParser</span><span class="p">(</span><span class="s1">&#39;OBV_full.xml&#39;</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">getTree</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">saveTree2svg</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
 </div>
+<p>Получили вот такую структуру.___</p>
+<p>Чтобы убедиться, что полученная нами структура является полной, повторим построение дерева, увеличив количество тегов до 10000</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">xmlParser</span><span class="p">(</span><span class="s1">&#39;OBV_full.xml&#39;</span><span class="p">)</span>
+<span class="hll"><span class="n">x</span><span class="o">.</span><span class="n">getTree</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</span><span class="n">x</span><span class="o">.</span><span class="n">saveTree2svg</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Как видим, структура не изменилась. Зничит показанное на рисунке дерево полностью отражает структуру данных xml источника.</p>
+<ol class="arabic simple" start="2">
+<li>Указываем пути к данным</li>
+</ol>
+<p>Теги элементов xml файла имеют как правило информативные имена, поэтому из рисунка легко понять какие данные хранит каждый элемент. Кроме того, по рисунку легко построить пути для каждого нужного элемента. В нашем примере мы будем извлекать данные из всех элементов</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">path2Data</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;source/vacancies/vacancy/company/name&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/company/hr-agency&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/company/descrip&#39;</span><span class="p">,</span>
+
+                       <span class="s1">&#39;source/vacancies/vacancy/addresses/address/location&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/addresses/address/lng&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/addresses/address/lat&#39;</span><span class="p">,</span>
+
+                       <span class="s1">&#39;source/vacancies/vacancy/requirement/education&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/requirement/qualification&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/requirement/experience&#39;</span><span class="p">,</span>
+
+                       <span class="s1">&#39;source/vacancies/vacancy/creation-date&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/salary&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/currency&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/category/industry&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/job-name&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/employment&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/schedule&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/description&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;source/vacancies/vacancy/duty&#39;</span><span class="p">,</span>
+                    <span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Создаем генератор извлекаемых данных</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">path2Data</span><span class="p">,</span> <span class="n">type_response</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Сохраняем данные в таблицу БД</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">psycopg2</span>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">&quot;dbname=vacancy user=admin password=123456&quot;</span><span class="p">)</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">autocommit</span><span class="o">=</span><span class="bp">True</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">rec</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+        <span class="n">fields_name</span><span class="o">=</span><span class="s1">&#39;(&#39;</span><span class="o">+</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;&quot;&#39;</span><span class="o">+</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;&quot;&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">rec</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span><span class="o">+</span><span class="s1">&#39;)&#39;</span>
+        <span class="n">templ</span><span class="o">=</span><span class="s1">&#39;(&#39;</span><span class="o">+</span><span class="p">(</span><span class="s1">ur&#39;</span><span class="si">%s</span><span class="s1">, &#39;</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">rec</span><span class="p">))[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;)&#39;</span>
+        <span class="n">query</span><span class="o">=</span> <span class="s2">&quot;INSERT INTO pub_simple </span><span class="si">%s</span><span class="s2"> VALUES </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fields_name</span><span class="p">,</span> <span class="n">templ</span><span class="p">)</span>
+        <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">rec</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>Вот и все! Все данные в нашей таблице.</p>
 </div>
 </div>
 
@@ -90,10 +140,7 @@
   <h3><a href="../index.html">Оглавление</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Парсинг базы вакансий</a><ul>
-<li><a class="reference internal" href="#id2">Алгоритм</a><ul>
-<li><a class="reference internal" href="#id3">Поскольку наш файл имеет внушительный размер, очевидно, он собержит много записей одинаковой структуры. Поэтому анализировоть файл целиком для построения структуры данных не имеет смысла. Выполним построение структуры данных на примере первых 1000 элементов</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#id2">Алгоритм</a></li>
 </ul>
 </li>
 </ul>
@@ -102,6 +149,7 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="xml_source_list.html" title="предыдущая глава">Источники открытых данных xml</a></li>
+      <li>Next: <a href="primer_remote_source.html" title="следующая глава">Парсинг удаленного источника (сайта)</a></li>
   </ul></li>
 </ul>
 </div>
