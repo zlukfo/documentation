@@ -58,7 +58,7 @@
 <p>Следует понимать, что процесс извлечения данных может быть реализован несколькими путями. Чтобы выбрать наиболее эффективный путь (с точки зрения времени и трудозатрат) первым и самым важным этапом является анализ структуры сайта и страниц, хранящих необходимую информацию.</p>
 <div class="section" id="id2">
 <h2>Этап 1. Анализ сайта<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
-<p>Анализ - творческий процесс, во многом зависит структурой сайта и определяет последующий способ его парсинга. В данном разделе даются рекомендации по __ какой путь выберите Вы зависит во многом от вашего опыта</p>
+<p>Анализ - творческий процесс, во многом зависит структурой сайта и определяет последующий способ его парсинга.</p>
 <div class="section" id="id3">
 <h3>Сбор информации о ссылка сайта, хранящих необходимые данные<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Сбор информации может выполняться одним из двух способов</p>
@@ -67,8 +67,16 @@
 <p id="id5">Из листинга видно, что достаточно много ссылок имеют такую структуру ___</p>
 <p>Перейдя по любой из них в браузере мы попадаем на страницу, содержащую нужные нам данные. Значит, именно эти страницы и нужно указать функции парсера для извлечения данных. Делается это примерно так</p>
 <p>Способ второй - ручной. Переходя в браузере по ссылкам сайта вручную определить ссылки какого типа нам необходимы. Например ___</p>
-<p>Очевидно, что бля данного способа нам нет нужны собирать все ссылки с сайта - мы можем выполнять парсинг генерируя их &#8220;на лету&#8221;. Примерно так</p>
-<hr class="docutils" />
+<p>Очевидно, что для данного способа нам нет нужны собирать все ссылки с сайта - мы можем выполнять парсинг генерируя их &#8220;на лету&#8221;. Генерировать ссылки можно, например таким кодом</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;http://hh.</span><span class="si">%(domen)s</span><span class="s1">/data/</span><span class="si">%(id)s</span><span class="s1">?filter1=</span><span class="si">%(f)s</span><span class="s1">&amp;filter2=</span><span class="si">%(ff)s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;domen&#39;</span><span class="p">:</span><span class="n">d</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;ff&#39;</span><span class="p">:</span><span class="n">ff</span><span class="p">}</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;com&#39;</span><span class="p">,</span> <span class="s1">&#39;ru&#39;</span><span class="p">]</span>
+              <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;profession&#39;</span><span class="p">,</span><span class="s1">&#39;employers&#39;</span><span class="p">]</span>
+                      <span class="k">for</span> <span class="n">ff</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="p">]:</span>
+            <span class="k">print</span> <span class="n">j</span>
+</pre></div>
+</div>
 <p>Первая особенность интернет сайтов как источника xml данных заключается в том, что данные хранятся по адресам (страниц) небольшими порциями. И таких адресов у сайта очень много. А кроме того, сайт включает адреса к другим данным, нас не интересующим. В нашем примере это адреса на описание компаний, разместивших вакансии, адреса на страницы ___ и т.д. Нас интересуют только адреса с описанием вакансий.</p>
 <p>Поэтому, задача данного этапа - собрать все адреса сайта и оставить только те, по которым хранятся интересующие нас данные и.</p>
 <p>Решается эта задача с помощью следующего кода</p>
