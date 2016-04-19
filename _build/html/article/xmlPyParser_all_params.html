@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="../index.html" />
-    <link rel="next" title="Дополнительные методы парсера" href="extend_parser.html" />
+    <link rel="next" title="Расширенные методы парсера" href="extend_parser.html" />
     <link rel="prev" title="xmlPyParser. Быстрый старт" href="usage_xmlPyParser.html" />
    
   
@@ -48,8 +48,11 @@
 <li>как класса Python, импортируемого при написании собственных парсеров конкретных xml источников.</li>
 </ul>
 <p>Последний способ позволяет реализовать все возможности xmlPyParser, описанию которых и посвящена данная статья.</p>
+<p>Прежде всего, следует запомнить, что класс xmlParser включает только базовые параметры и методы необходимые для анализа и извлечения данных из <strong>любых</strong> xml источников. Но в мире нет ничего универсального, и извлечение данных из конкретного xml источника имеет, как правило, свои особенности. Поэтому, для удобной реализации прикладных задач xmlParser позволяет легко расширять свои возможности новыми методами и функциями, которые используя базовые, упрощают решение конкретных задач.</p>
 <div class="section" id="id1">
-<h2>Создание объекта парсинга<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<h2>Базовые методы класса<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id2">
+<h3>Создание объекта парсинга<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h3>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">xmlParser</span><span class="p">(</span><span class="n">source_path</span><span class="o">=</span><span class="n">Source_Path</span><span class="p">,</span> <span class="n">source_type</span><span class="o">=</span><span class="n">Source_Type</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -71,7 +74,7 @@
 <p>Подробнее о значениях заголовков и их влиянии на корректность обращений к источнику данных через url можно прочитать здесь___</p>
 </div>
 <div class="section" id="xml">
-<h2>Анализ структуры xml источника<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h2>
+<h3>Анализ структуры xml источника<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Как было сказано ранее __, анализ структуры необходим для определения путей, по которым в xml источнике сохранены нужные нам данные. xmlPyParser предоставляет два способа определения путей - консольный и визуальный. Иногда, для более точного определения пути рекомендуется использовать их комбинацию.</p>
 <p>Чтобы определить путь к данным одного типа, используется 2 метода метод <cite>restorePathByData</cite>:</p>
 <ol class="arabic simple">
@@ -151,8 +154,8 @@
 </table>
 <p>Для визуального отражения структуры источника в xmlPyParser существует еще один полезный метод <strong>toD3js()</strong>. Он преобразует структуру источника в структуру данных нотации treejson. Эта нотация используется популяроной javascript библиотекой D3js для отображения иерархических структур в браузере. Метод вызывается без параметров и возвращает словарь структуры источника в формате treejson</p>
 </div>
-<div class="section" id="id2">
-<h2>Извлечение данных из источника<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id3">
+<h3>Извлечение данных из источника<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Для извлечения применяется метод <strong>getData()</strong></p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">getData</span><span class="p">(</span><span class="n">Path_List</span><span class="p">,</span> <span class="n">get_attrib</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">type_response</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
 </pre></div>
@@ -174,6 +177,16 @@
 </table>
 </div>
 </div>
+<div class="section" id="id4">
+<h2>Расширение класса<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Базовый функционал xmlParser легко расширяется дополнительными методами с учетом специфики решаемых задач. Для этого нужно сделать два шага</p>
+<ol class="arabic simple">
+<li>создать новый класс-расширение, включающий необходимые методы</li>
+<li>добавить новый класс-расширение в базовый класс</li>
+</ol>
+<p>xmlParser активно развивается, в него постоянно добавляются новые расширенные методы, решающие наиболее востребованный класс задач. Ознакомиться с последними изменениями можно здесь.</p>
+</div>
+</div>
 
 
           </div>
@@ -184,9 +197,13 @@
   <h3><a href="../index.html">Оглавление</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Возможности парсера xmlPyParser</a><ul>
-<li><a class="reference internal" href="#id1">Создание объекта парсинга</a></li>
+<li><a class="reference internal" href="#id1">Базовые методы класса</a><ul>
+<li><a class="reference internal" href="#id2">Создание объекта парсинга</a></li>
 <li><a class="reference internal" href="#xml">Анализ структуры xml источника</a></li>
-<li><a class="reference internal" href="#id2">Извлечение данных из источника</a></li>
+<li><a class="reference internal" href="#id3">Извлечение данных из источника</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">Расширение класса</a></li>
 </ul>
 </li>
 </ul>
@@ -195,7 +212,7 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="usage_xmlPyParser.html" title="предыдущая глава">xmlPyParser. Быстрый старт</a></li>
-      <li>Next: <a href="extend_parser.html" title="следующая глава">Дополнительные методы парсера</a></li>
+      <li>Next: <a href="extend_parser.html" title="следующая глава">Расширенные методы парсера</a></li>
   </ul></li>
 </ul>
 </div>

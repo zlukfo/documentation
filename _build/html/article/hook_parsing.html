@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Приемы парсиинга &mdash; Документация mydoc 1</title>
+    <title>Приемы парсинга &mdash; Документация mydoc 1</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="../index.html" />
-    <link rel="next" title="Проекты на основе парсера xmlPyParser" href="xmlPyParser_projects.html" />
-    <link rel="prev" title="Дополнительные методы парсера" href="extend_parser.html" />
+    <link rel="next" title="Парсинг базы вакансий" href="primer_big_local_file.html" />
+    <link rel="prev" title="Расширенные методы парсера" href="extend_parser.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -40,11 +40,11 @@
           <div class="body" role="main">
             
   <div class="section" id="id1">
-<h1>Приемы парсиинга<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<h1>Приемы парсинга<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
 <p>В данной статье содержатся некоторые неочевидные приемы работы с парсером.</p>
-<div class="section" id="id2">
-<h2>Задание пути регулярным выражением<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
-<p>Путь для извлечения необходимых данных задается строкой. Для более гибкой настройки эту строку можно задать регулярным выражением.</p>
+<div class="section" id="xml">
+<h2>Задание пути к данным в xml-источнике регулярным выражением<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Путь к необходимым данным внутри источника для их извлечения задается строкой. Для более гибкой настройки пути, эту строку можно задать регулярным выражением.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -54,12 +54,30 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Решение</strong>
-Как известно, ссылки содержатся в атрибуте <cite>href</cite> тега <cite>a</cite>. Значит там необходимо выделить в источнике все теги <cite>a</cite> с атрибутом <cite>href</cite> и извлечь все значения этих атрибутов. Делается это так</p>
+<p><strong>Решение</strong></p>
+<p>Как известно, ссылки содержатся в атрибуте <cite>href</cite> тега <cite>a</cite>. Значит там необходимо выделить в источнике все теги <cite>a</cite> с атрибутом <cite>href</cite> и извлечь все значения этих атрибутов. Делается это так</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">xmlParser</span><span class="p">(</span><span class="s1">&#39;http://www.cian.ru&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">getData</span><span class="p">([</span><span class="s1">&#39;.*/a&#39;</span><span class="p">],</span> <span class="n">get_attrib</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="s1">&#39;href&#39;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
             <span class="k">print</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;href&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>Генератор адресов доступа к xml источнику данных<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Наиболее часто потребность такого генератора возникает при извлечении данных из html источников - сайтов в Интернете.</p>
+<p>На одной странице сайта, как правило, хранится лишь небольшая порция информации. Чтобы собрать значительный объем данных, парсеру необходимо обойти множество страниц сайта и извлечь данные из каждой. Так вот, генератор адресов является одним из способов указать сайту множество адресов, которые ему необходимо обойти, чтобы извлечь данные. Идея генератора основана на том, что адреса на страницы с необходимыми данными имеют, как правило, одинаковую структуру и отличаются лишь отдельными элементами. Например, объявления о продаже однокомнатной или двухкомнатной квартиры в Москве сайта <a class="reference external" href="http://cian.ru">http://cian.ru</a> находятся по адресу</p>
+<p><a class="reference external" href="http://www.cian.ru/cat.php?deal_type=sale&amp;engine_version=2&amp;offer_type=flat&amp;region=1&amp;room1=1&amp;room2=1">http://www.cian.ru/cat.php?deal_type=sale&amp;engine_version=2&amp;offer_type=flat&amp;region=1&amp;room1=1&amp;room2=1</a></p>
+<p>о продаже аналогичных квартир в Санкт-Перербурге - по адресу</p>
+<p><a class="reference external" href="http://www.cian.ru/cat.php?deal_type=sale&amp;engine_version=2&amp;offer_type=flat&amp;region=2&amp;room1=1&amp;room2=1">http://www.cian.ru/cat.php?deal_type=sale&amp;engine_version=2&amp;offer_type=flat&amp;region=2&amp;room1=1&amp;room2=1</a></p>
+<p>а в Ростове-на-Дону
+<a class="reference external" href="http://www.cian.ru/cat.php?deal_type=sale&amp;engine_version=2&amp;offer_type=flat&amp;region=4606&amp;room1=1&amp;room2=1">http://www.cian.ru/cat.php?deal_type=sale&amp;engine_version=2&amp;offer_type=flat&amp;region=4606&amp;room1=1&amp;room2=1</a></p>
+<p>Теперь практическая задача - указать парсеру адреса к спискам объявлений о продаже одно-, двух- и четырехкомнатных квартир в Москве, Санкт-Петербурге и Ростовской области. С помощью генератора адресов это делается так:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;http://www.cian.ru/cat.php?deal_type=sale&amp;...&amp;region=</span><span class="si">%(reg)s</span><span class="s1">&amp;room</span><span class="si">%(n)s</span><span class="s1">=1&#39;</span> <span class="o">%</span> <span class="p">{</span><span class="s1">&#39;reg&#39;</span><span class="p">:</span><span class="n">reg</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">:</span><span class="n">n</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;4606&#39;</span><span class="p">]</span>
+          <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="p">]:</span>
+        <span class="k">print</span> <span class="n">link</span>
 </pre></div>
 </div>
 </div>
@@ -73,8 +91,9 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Оглавление</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Приемы парсиинга</a><ul>
-<li><a class="reference internal" href="#id2">Задание пути регулярным выражением</a></li>
+<li><a class="reference internal" href="#">Приемы парсинга</a><ul>
+<li><a class="reference internal" href="#xml">Задание пути к данным в xml-источнике регулярным выражением</a></li>
+<li><a class="reference internal" href="#id2">Генератор адресов доступа к xml источнику данных</a></li>
 </ul>
 </li>
 </ul>
@@ -82,8 +101,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="extend_parser.html" title="предыдущая глава">Дополнительные методы парсера</a></li>
-      <li>Next: <a href="xmlPyParser_projects.html" title="следующая глава">Проекты на основе парсера xmlPyParser</a></li>
+      <li>Previous: <a href="extend_parser.html" title="предыдущая глава">Расширенные методы парсера</a></li>
+      <li>Next: <a href="primer_big_local_file.html" title="следующая глава">Парсинг базы вакансий</a></li>
   </ul></li>
 </ul>
 </div>

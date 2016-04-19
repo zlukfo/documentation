@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Обработка и анализ текста &mdash; Документация mydoc 1</title>
+    <title>xmlParser - инструмент извлечения (парсинга) данных &mdash; Документация mydoc 1</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="#" />
-    <link rel="next" title="Парсинг источников xml" href="article/xml_parsing.html" />
+    <link rel="next" title="Введение" href="article/xml_parsing.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -38,15 +38,14 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="id1">
-<h1>Обработка и анализ текста<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
-<p>Содержание:</p>
+  <div class="section" id="xmlparser">
+<h1>xmlParser - инструмент извлечения (парсинга) данных<a class="headerlink" href="#xmlparser" title="Ссылка на этот заголовок">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="article/xml_parsing.html">Парсинг источников xml</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#id1">Введение</a></li>
-<li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#id3">Зачем нужен парсинг данных?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#id4">Алгоритм парсинга источников xml</a></li>
+<li class="toctree-l1"><a class="reference internal" href="article/xml_parsing.html">Введение</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#id2">Что такое парсинг</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#id4">Зачем нужен парсинг данных?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#xml">Алгоритм парсинга источников xml</a></li>
 <li class="toctree-l2"><a class="reference internal" href="article/xml_parsing.html#id5">Требования к программе-парсеру</a></li>
 </ul>
 </li>
@@ -57,24 +56,14 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="article/xmlPyParser_all_params.html">Возможности парсера xmlPyParser</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="article/xmlPyParser_all_params.html#id1">Создание объекта парсинга</a></li>
-<li class="toctree-l2"><a class="reference internal" href="article/xmlPyParser_all_params.html#xml">Анализ структуры xml источника</a></li>
-<li class="toctree-l2"><a class="reference internal" href="article/xmlPyParser_all_params.html#id2">Извлечение данных из источника</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/xmlPyParser_all_params.html#id1">Базовые методы класса</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/xmlPyParser_all_params.html#id4">Расширение класса</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="article/extend_parser.html">Дополнительные методы парсера</a></li>
-<li class="toctree-l1"><a class="reference internal" href="article/hook_parsing.html">Приемы парсиинга</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="article/hook_parsing.html#id2">Задание пути регулярным выражением</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="article/xmlPyParser_projects.html">Проекты на основе парсера xmlPyParser</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="article/xmlPyParser_projects.html#xml">База данных xml источников</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="article/xml_source_list.html">Источники открытых данных xml</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="article/xml_source_list.html#id1">Архивные данные для скачивания</a></li>
-<li class="toctree-l2"><a class="reference internal" href="article/xml_source_list.html#online">Online данные</a></li>
-<li class="toctree-l2"><a class="reference internal" href="article/xml_source_list.html#api">API сервисы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="article/extend_parser.html">Расширенные методы парсера</a></li>
+<li class="toctree-l1"><a class="reference internal" href="article/hook_parsing.html">Приемы парсинга</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="article/hook_parsing.html#xml">Задание пути к данным в xml-источнике регулярным выражением</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/hook_parsing.html#id2">Генератор адресов доступа к xml источнику данных</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="article/primer_big_local_file.html">Парсинг базы вакансий</a><ul>
@@ -87,16 +76,14 @@
 <li class="toctree-l2"><a class="reference internal" href="article/primer_remote_source.html#id8">Этап 3. Извлечение данных по нужным ссылкам</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="article/xml_source_list.html">Источники открытых данных xml</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="article/xml_source_list.html#id1">Архивные данные для скачивания</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/xml_source_list.html#online">Online данные</a></li>
+<li class="toctree-l2"><a class="reference internal" href="article/xml_source_list.html#api">API сервисы</a></li>
+</ul>
+</li>
 </ul>
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Ссылка на этот заголовок">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Алфавитный указатель</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Состав модуля</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Поиск</span></a></li>
-</ul>
 </div>
 
 
@@ -104,17 +91,11 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Оглавление</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Обработка и анализ текста</a></li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
-<div class="relations">
+        <div class="sphinxsidebarwrapper"><div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="article/xml_parsing.html" title="следующая глава">Парсинг источников xml</a></li>
+      <li>Next: <a href="article/xml_parsing.html" title="следующая глава">Введение</a></li>
   </ul></li>
 </ul>
 </div>

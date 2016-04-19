@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../_static/translations.js"></script>
     <link rel="top" title="Документация mydoc 1" href="../index.html" />
     <link rel="next" title="Возможности парсера xmlPyParser" href="xmlPyParser_all_params.html" />
-    <link rel="prev" title="Парсинг источников xml" href="xml_parsing.html" />
+    <link rel="prev" title="Введение" href="xml_parsing.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -43,7 +43,8 @@
 <h1>xmlPyParser. Быстрый старт<a class="headerlink" href="#xmlpyparser" title="Ссылка на этот заголовок">¶</a></h1>
 <p><strong>xmlPyParser</strong> - это программа написанная на языке программирования Python. xmlPyParser является именно <strong>инструментом</strong> парсинга, потому что:</p>
 <ul class="simple">
-<li>может быть запущен как конечное консольное приложение для анализа структуры xml источника и извлечения данных из него,</li>
+<li>может быть запущен как конечное консольное приложение для анализа структуры xml источника и извлечения данных из него.</li>
+<li>может быть реализован как приложение с графическим (оконным) интерфейсом,</li>
 <li>может быть импортирован в другие скрипты Python в виде класса,</li>
 <li>может быть запущен на сервере в качестве Web-приложения.</li>
 </ul>
@@ -79,7 +80,7 @@
 по пути <em>rss/channel/item/description</em> сохранены ___
 а перейдя по пути <em>rss/channel/item/pubDate</em> мы узнаем дату и время появления новости</p>
 <p>Графический способ анализа структуры источника xml не удобен для сильно разветвленных источников. К таковым прежде всего относятся страницы сайтов, сохраняющие данные в формате html. Например, вот так выглядит структура страницы сайта <a class="reference external" href="https://www.avito.ru">https://www.avito.ru</a>, содержащая объявления купли-продажи</p>
-<hr class="docutils" />
+<img alt="../_images/avito_tree.png" src="../_images/avito_tree.png" />
 <p>Разобраться из рисунка, по какому пути находятся нужные дам данные (например, заголовок объявления) практически невозможно.</p>
 <p>Поэтому, при определении пути к данным в сильно разветвленной структуре источника xml лучше воспользоваться консольным способом. Поясним его работу на примере</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -218,7 +219,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="xml_parsing.html" title="предыдущая глава">Парсинг источников xml</a></li>
+      <li>Previous: <a href="xml_parsing.html" title="предыдущая глава">Введение</a></li>
       <li>Next: <a href="xmlPyParser_all_params.html" title="следующая глава">Возможности парсера xmlPyParser</a></li>
   </ul></li>
 </ul>
