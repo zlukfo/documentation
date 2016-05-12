@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Примеры применения парсера &mdash; Документация mydoc 1</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="top" title="Документация mydoc 1" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>Примеры применения парсера<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>В данном разделе будут описываться практически реализованные примеры применения парсера.</p>
+<div class="section" id="id2">
+<h2>Получение списка городов и населенных пунктов РФ<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Исходный xml-файл можно скачать отсюда <a class="reference external" href="http://gis-lab.info/qa/vmap0-settl-rus.html">http://gis-lab.info/qa/vmap0-settl-rus.html</a></p>
+<p><strong>Задача</strong> сконвертировать данные в формат JSON.</p>
+<p>Особенностью структуры xml-файла является то, что все данные хранятся в атрибутах.</p>
+<p>Итоговый код с применением xmlParser выглядит так</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">xmlParser</span><span class="p">(</span><span class="s1">&#39;np.xml&#39;</span><span class="p">,</span> <span class="s1">&#39;xml&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">getData</span><span class="p">([</span><span class="s1">&#39;osm/node&#39;</span><span class="p">,</span> <span class="s1">&#39;osm/node/tag&#39;</span><span class="p">],</span> <span class="n">get_attrib</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">d</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;a.txt&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;[</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">d</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">simplejson</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">,</span>  <span class="n">ensure_ascii</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span> <span class="o">*</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">d</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+                <span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="o">=</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">=</span><span class="n">v</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">]&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Примеры применения парсера</a><ul>
+<li><a class="reference internal" href="#id2">Получение списка городов и населенных пунктов РФ</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Эта страница</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/article/primemenie.txt"
+            rel="nofollow">Исходный текст</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Быстрый поиск</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Искать" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, zlukfo.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="../_sources/article/primemenie.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

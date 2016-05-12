@@ -17,6 +17,8 @@ xmlParser - инструмент извлечения (парсинга) дан�
    article/primer_big_local_file
    article/primer_remote_source 
    article/xml_source_list
+   article/primenenie
+   
 
 
 
